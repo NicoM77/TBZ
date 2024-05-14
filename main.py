@@ -51,7 +51,7 @@ for person, repos_list in repos.items():
     os.system("git add .")
 
     # Commit durchführen
-    os.system("git commit -m 'feat: update'")
+    os.system("git commit -m 'feat: commit'")
 
     # # Pushen der Änderungen
     os.system("git push origin HEAD")
