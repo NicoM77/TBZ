@@ -9,6 +9,16 @@ json_file_path = os.path.join(os.path.dirname(__file__), 'data.json')
 with open(json_file_path, 'r') as file:
     repos = json.load(file)
 
+
+def extract_project_name(url):
+    # Teile die URL an jedem Schrägstrich '/'
+    parts = url.split('/')
+    # Nimm das letzte Element der Teile
+    last_part = parts[-1]
+    # Entferne die Endung '.git', falls vorhanden
+    project_name = last_part.replace('.git', '')
+    return project_name
+
 # Git-Repositorys klonen und .git-Ordner löschen
 for person, repos_list in repos.items():
         # Branch wechseln (falls vorhanden)
@@ -29,7 +39,9 @@ for person, repos_list in repos.items():
 
         # Git-Repo klonen
         os.system(f"git clone {repo_url}")
+        
 
+        os.rename(extract_project_name(repo_url), repo_dir)
         # In das geklonte Repository wechseln
         os.chdir(repo_dir)
 
@@ -37,6 +49,8 @@ for person, repos_list in repos.items():
         shutil.rmtree(git_dir, ignore_errors=True)
 
         # Hinzufügen aller gelöschten Dateien
+        # Zurück zum ursprünglichen Verzeichnis wechseln
+        os.chdir("..")
     os.system("git add .")
 
     # Commit durchführen
@@ -47,3 +61,5 @@ for person, repos_list in repos.items():
 
         # Zum main-Branch wechseln
     os.system("git checkout main")
+
+
