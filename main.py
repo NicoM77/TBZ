@@ -45,18 +45,15 @@ for person, repos_list in repos.items():
         # In das geklonte Repository wechseln
         os.chdir(repo_dir)
 
-        git_dir = os.path.join(repo_dir, '.git')
-        shutil.rmtree(git_dir, ignore_errors=True)
+        os.rename(".git", "git")
 
-        # Hinzufügen aller gelöschten Dateien
-        # Zurück zum ursprünglichen Verzeichnis wechseln
         os.chdir("..")
     os.system("git add .")
 
     # Commit durchführen
     os.system("git commit -m 'feat: update'")
 
-    # Pushen der Änderungen
+    # # Pushen der Änderungen
     os.system("git push origin HEAD")
 
         # Zum main-Branch wechseln
